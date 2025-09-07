@@ -12,7 +12,7 @@ public:
     Registration(Person a);
     Person getAttendee();
     QDate getBookingDate();
-    double calculateFee();
+    virtual double calculateFee();
     QString toString();
 
 private:
