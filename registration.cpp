@@ -25,5 +25,5 @@ double Registration::calculateFee()
 
 QString Registration::toString()
 {
-    return QString("The information of the person registered %1./n Booking Date: %2/n Fee: %3").arg(getAttendee().toString()).arg(getBookingDate()).arg(calculateFee());
+    return QString("The information of the person registered %1./n Booking Date: %2/n Fee: %3").arg(getAttendee().toString()).arg(getBookingDate().toString("yyyy-MM-dd")).arg(calculateFee());
 }
