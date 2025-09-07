@@ -2,6 +2,11 @@
 #include <iostream>
 #include <QDebug>
 
+Person::Person()
+{
+    //null constructor
+}
+
 Person::Person(QString n, QString a, QString e)
 {
     n = m_Name;
@@ -26,5 +31,5 @@ QString Person::getEmail()
 
 QString Person::toString()
 {
-    return QString("The name of the person registered %d./n Email: %d/n Affiliation: %d").arg(getName(), getAffiliation(), getEmail());
+    return QString("The name of the person registered %1./n Email: %2/n Affiliation: %3").arg(getName(), getAffiliation(), getEmail());
 }

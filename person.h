@@ -9,6 +9,7 @@ using namespace std;
 class Person
 {
 public:
+    Person();
     Person(QString n, QString a, QString e);
     QString getName();
     QString getAffiliation();
