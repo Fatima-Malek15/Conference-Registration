@@ -1,11 +1,12 @@
 #include "registrationlist.h"
 
-RegistrationList::RegistrationList() {}
+RegistrationList::RegistrationList():Registration()
+{}
 
 bool RegistrationList::addRegistration(Registration *r)
 {
     if(r != NULL){
-        m_AttendeeList.append(r->Registration());
+        m_AttendeeList.append(r);
         return true;
     }
     return false;
@@ -19,35 +20,46 @@ RegistrationList::~RegistrationList()
     }
 }
 
-bool RegistrationList::isRegistered()
+bool RegistrationList::isRegistered(QString n)
 {
-    if(!m_AttendeeList.isEmpty())
-    {
-        for(Registration *r:m_AttendeeList){
-            if(m_AttendeeList.contains(r->getAttendee()))
-            {
-                QString("Attendee %1 already registered").arg(r->getAttendee());
-                return true;
-            }
-            else
-            {
-                QString("Attendee %1 not registered").arg(r->getAttendee());
-            }
-
+    for(Registration *r:m_AttendeeList){
+        if(r->getAttendee().getName() == n)
+        {
+            return true;
         }
     }
     return false;
+
 }
 
-double RegistrationList::totalFee(QString l)
+double RegistrationList::totalFee(QString t)
 {
-    if(l == "StudentRegistration")
-    {
+    double total = 0.0;
 
+    for(Registration *r: m_AttendeeList)
+    {
+        if(t == "Registration" && dynamic_cast<const Registration*>(registration) ||
+             t == "GuestRegistration" && dynamic_cast<const GuestRegistration*>(registration) ||
+            t == "StudentRegistration" && dynamic_cast<const StudentRegistration*>(registration) ||
+            t == "All")
+        {
+            total += r->calculateFee();
+        }
     }
+
+    return total;
 }
 
 int RegistrationList::totalRegistration(QString a)
 {
+    int count = 0;
 
+    for(Registration *r: m_AttendeeList)
+    {
+        if(r->getAttendee().getAffiliation() == a)
+        {
+            count++;
+        }
+    }
+    return count;
 }

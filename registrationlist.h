@@ -9,7 +9,7 @@ public:
     RegistrationList();
     bool addRegistration(Registration* r);
     ~RegistrationList();
-    bool isRegistered();
+    bool isRegistered(QString n);
     double totalFee(QString l);
     int totalRegistration(QString a);
 
