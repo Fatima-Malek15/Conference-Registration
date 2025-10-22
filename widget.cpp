@@ -83,6 +83,106 @@ Widget::Widget(QWidget *parent)
 
     setLayout(layout);
 
+
+    //adding signals and slots
+    QObject::connect(add, &QPushButton::clicked, this, &Widget::addInfo);
+    QObject::connect(registrationCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &Widget::fieldChanged);
+    QObject::connect(deleteButton, &QPushButton::clicked, this, &Widget::deleteInfo);
+    QObject::connect(searchButton, &QPushButton::clicked, this, &Widget::searchInfo);
 }
 
+
+
 Widget::~Widget() {}
+
+//adding the given information into the table
+void Widget::addInfo()
+{
+    QString name  = nameLine->text();
+    QString email = emailLine->text();
+    QString date = dateEdit->text();
+
+    table->setItem(1,1, new QTableWidgetItem(name));
+    table->setItem(1,2, new QTableWidgetItem(email));
+    table->setItem(1,3, new QTableWidgetItem(date));
+}
+
+
+void Widget::fieldChanged()
+{
+    QString text = registrationCombo->currentText();
+
+    if(text == "Student")
+    {
+        qualificationLabel->show();
+        qualificationCombo->show();
+        categoryLine->hide();
+        categoryLabel->hide();
+    }
+    else if(text == "Guest")
+    {
+        categoryLine->show();
+        categoryLabel->show();
+        qualificationLabel->hide();
+        qualificationCombo->hide();
+        affiliationLabel->hide();
+        affiliationCombo->hide();
+    }
+    else{
+        affiliationLabel->show();
+        affiliationCombo->show();
+        categoryLabel->hide();
+        categoryLine->hide();
+        qualificationLabel->hide();
+        qualificationCombo->hide();
+    }
+}
+
+
+
+void Widget::deleteInfo()
+{
+    QTableWidgetItem *item = table->currentItem();
+    QTableWidgetItem *fee = table->columnAt(7);
+
+    table->removeRow(table->row(item));
+
+    //subtract fees
+    double totaLFee = regList->totalFee(fee);
+    for(const Registration *registration: regList)
+    {
+        if(item == "Registration" && dynamic_cast<const Registration*>(registration) ||
+             item == "GuestRegistration" && dynamic_cast<const GuestRegistration*>(registration) ||
+            item == "StudentRegistration" && dynamic_cast<const StudentRegistration*>(registration) ||
+            (item == "All"))
+        {
+            totalFee -= registration->calculateFees();
+        }
+    }
+}
+
+
+
+void Widget::searchInfo()
+{
+    QString name = searchByLine->text();
+    bool found = false;
+
+    for(int i = 0; i < table->rowCount(); i++)
+    {
+        QTableWidgetItem *item = table->item(i, 0); // Assuming name is in column 0
+        if (item && item->text() == name) {
+            found = true;
+            break;
+        }
+    }
+    if(found)
+    {
+        QMessageBox::information(this, "Registration Status",QString("Name %1/nRegistered? Yes").arg(name));
+    }
+    else
+    {
+        QMessageBox::information(this, "Registration Status",QString("Name %1/nRegistered? No").arg(name));
+    }
+}
+

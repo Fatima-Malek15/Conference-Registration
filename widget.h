@@ -12,6 +12,7 @@
 #include <QGridLayout>
 #include <QDateEdit>
 #include <QCursor>
+#include <QMessageBox>
 
 #include "registrationlist.h"
 
@@ -24,7 +25,10 @@ public:
     ~Widget();
 
 public slots:
-    //void addInfo();
+    void addInfo();
+    void fieldChanged();
+    void deleteInfo();
+    void searchInfo();
 
 private:
     QTableWidget *table;
