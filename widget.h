@@ -11,6 +11,7 @@
 #include <QMessageBox>
 #include <QGridLayout>
 #include <QDateEdit>
+#include <QCursor>
 
 #include "registrationlist.h"
 
@@ -23,12 +24,14 @@ public:
     ~Widget();
 
 public slots:
-    void addInfo();
+    //void addInfo();
 
 private:
     QTableWidget *table;
     Registration *registration;
     RegistrationList *regList;
+
+    QCursor cursor;
 
     QGridLayout *layout;
 
@@ -53,7 +56,6 @@ private:
     QComboBox *affiliationCombo;
     QComboBox *registrationCombo;
     QComboBox *qualificationCombo;
-    QComboBox *categoryCombo;
     QComboBox *totalFees;
 
     QPushButton *add;
