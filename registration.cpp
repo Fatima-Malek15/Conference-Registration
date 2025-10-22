@@ -1,29 +1,34 @@
 #include "registration.h"
 
+double Registration::STANDARD_FEE = 100.00;
 
-Registration::Registration():Person() {}
+Registration::Registration(QObject *parent):QObject(parent) {}
 
-Registration::Registration(Person a):Person(a.getName(), a.getAffiliation(), a.getEmail())
+Registration::Registration(Person a)
 {
-
+    m_Attendee.getName() = a.getName();
+    m_Attendee.getEmail() = a.getEmail();
+    m_Attendee.getAffiliation() = a.getAffiliation();
 }
 
-Person Registration::getAttendee()
+Person Registration::getAttendee() const
 {
-    return Person(m_Attendee.getName(), m_Attendee.getAffiliation(), m_Attendee.getEmail());
+    Person p(m_Attendee.getName(), m_Attendee.getAffiliation(), m_Attendee.getEmail());
+    return p;
 }
 
-QDate Registration::getBookingDate()
+QDate Registration::getBookingDate() const
 {
-    return m_BookingDate.currentDate();
+    return m_BookingDate;
 }
 
-double Registration::calculateFee()
+double Registration::calculateFee() const
 {
     return STANDARD_FEE;
 }
 
-QString Registration::toString()
+QString Registration::toString() const
 {
-    return QString("The information of the person registered %1./n Booking Date: %2/n Fee: %3").arg(getAttendee().toString()).arg(getBookingDate().toString("yyyy-MM-dd")).arg(calculateFee());
+    return QString("Booking Date: %1\nThe Attendee is %2\nThe Standard Fee%3")
+        .arg(getBookingDate().toString("yyyy-MM-dd")).arg(getAttendee().toString()).arg(calculateFee());
 }

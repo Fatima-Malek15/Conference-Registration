@@ -1,7 +1,11 @@
 #include "registrationlist.h"
+#include "guestregistration.h"
+#include "studentregistration.h"
 
-RegistrationList::RegistrationList():Registration()
-{}
+RegistrationList::RegistrationList(Registration *r)
+{
+    m_AttendeeList.append(r);
+}
 
 bool RegistrationList::addRegistration(Registration *r)
 {
@@ -36,14 +40,14 @@ double RegistrationList::totalFee(QString t)
 {
     double total = 0.0;
 
-    for(Registration *r: m_AttendeeList)
+    for(Registration *registration: m_AttendeeList)
     {
-        if(t == "Registration" && dynamic_cast<const Registration*>(registration) ||
-             t == "GuestRegistration" && dynamic_cast<const GuestRegistration*>(registration) ||
-            t == "StudentRegistration" && dynamic_cast<const StudentRegistration*>(registration) ||
-            t == "All")
+        if((t == "Registration" && dynamic_cast<const Registration*>(registration)) ||
+             (t == "GuestRegistration" && dynamic_cast<const GuestRegistration*>(registration)) ||
+            (t == "StudentRegistration" && dynamic_cast<const StudentRegistration*>(registration)) ||
+            (t == "All"))
         {
-            total += r->calculateFee();
+            total += registration->calculateFee();
         }
     }
 
@@ -54,12 +58,19 @@ int RegistrationList::totalRegistration(QString a)
 {
     int count = 0;
 
-    for(Registration *r: m_AttendeeList)
+    for(Registration *registration: m_AttendeeList)
     {
-        if(r->getAttendee().getAffiliation() == a)
+        if(registration->getAttendee().getAffiliation() == a)
         {
             count++;
         }
     }
     return count;
 }
+
+
+RegistrationList::RegistrationList(QObject *parent):QObject(parent)
+{
+
+}
+

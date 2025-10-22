@@ -1,20 +1,20 @@
 #include "guestregistration.h"
 
-GuestRegistration::GuestRegistration() {}
+GuestRegistration::GuestRegistration(QObject *parent):Registration(parent) {}
 
-GuestRegistration::GuestRegistration(Person a, QString q):Registration(Person(a.getName(),a.getAffiliation(),a.getEmail())), m_category(q)
+GuestRegistration::GuestRegistration(Person a, QString q):Registration(a)
 {
-
+    q = m_category;
 }
 
-double GuestRegistration::calculateFee()
+double GuestRegistration::calculateFee() const
 {
     return calculateFee()*0.90;
 }
 
-QString GuestRegistration::toString()
+QString GuestRegistration::toString() const
 {
-    return QString("The information of the person registered %1./n Booking Date: %2/n Fee: %3/nCategory %4").arg(getAttendee().toString()).arg(getBookingDate().toString("yyyy-MM-dd")).arg(calculateFee()).arg(m_category);
+    return QString("Qualification: %1\nThe Standard Fee is %2").arg(m_category).arg(calculateFee());
 }
 
 

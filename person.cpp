@@ -14,22 +14,22 @@ Person::Person(QString n, QString a, QString e)
     e = m_Email;
 }
 
-QString Person::getName()
+QString Person::getName() const
 {
     return m_Name;
 }
 
-QString Person::getAffiliation()
+QString Person::getAffiliation() const
 {
     return m_Affiliation;
 }
 
-QString Person::getEmail()
+QString Person::getEmail() const
 {
     return m_Email;
 }
 
-QString Person::toString()
+QString Person::toString() const
 {
     return QString("The name of the person registered %1./n Email: %2/n Affiliation: %3").arg(getName(), getAffiliation(), getEmail());
 }

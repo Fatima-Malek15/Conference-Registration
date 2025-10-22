@@ -11,10 +11,10 @@ class Person
 public:
     Person();
     Person(QString n, QString a, QString e);
-    QString getName();
-    QString getAffiliation();
-    QString getEmail();
-    QString toString();
+    QString getName() const;
+    QString getAffiliation() const;
+    QString getEmail() const;
+    QString toString() const;
 
 private:
     QString m_Name;

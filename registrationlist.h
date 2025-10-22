@@ -2,11 +2,14 @@
 #define REGISTRATIONLIST_H
 
 #include "registration.h"
+#include <QMetaObject>
 
-class RegistrationList : public Registration
+class RegistrationList : public QObject
 {
+    Q_OBJECT
 public:
-    RegistrationList();
+    explicit RegistrationList(QObject *parent = nullptr);
+    RegistrationList(Registration *r);
     bool addRegistration(Registration* r);
     ~RegistrationList();
     bool isRegistered(QString n);

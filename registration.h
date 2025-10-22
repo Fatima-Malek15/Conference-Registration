@@ -2,23 +2,30 @@
 #define REGISTRATION_H
 
 #include "person.h"
-
+#include <QObject>
 #include <QDate>
 
-class Registration : public Person
+class Registration : public QObject
 {
+    Q_OBJECT
+    Q_PROPERTY(Person getAttendee READ getAttendee CONSTANT)
+    Q_PROPERTY(QDate getBookingDate READ getBookingDate CONSTANT)
+    Q_PROPERTY(double calculateFee READ calculateFee CONSTANT)
+    Q_PROPERTY(QString toString READ toString CONSTANT)
 public:
-    Registration();
+    Registration(QObject *parent);
     Registration(Person a);
-    Person getAttendee();
-    QDate getBookingDate();
-    virtual double calculateFee();
-    QString toString();
+    Person getAttendee() const;
+    QDate getBookingDate() const;
+    virtual double calculateFee() const;
+    virtual QString toString() const;
+
+    static double STANDARD_FEE;
 
 private:
-    double STANDARD_FEE = 120.00; //constant fee for standard registration
+    //constant fee for standard registration
     Person m_Attendee;
-    QDate m_BookingDate;
+    QDate m_BookingDate = QDate::currentDate();
 };
 
 #endif // REGISTRATION_H

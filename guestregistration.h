@@ -5,11 +5,12 @@
 
 class GuestRegistration : public Registration
 {
+    Q_OBJECT
 public:
-    GuestRegistration();
+    GuestRegistration(QObject *parent);
     GuestRegistration(Person a, QString q);
-    double calculateFee() override;
-    QString toString();
+    double calculateFee() const override;
+    QString toString() const override;
 
 private:
     QString m_category;

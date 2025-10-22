@@ -1,13 +1,24 @@
 #include "studentregistration.h"
 
-StudentRegistration::StudentRegistration(Person a, QString q): Registration(Person(a.getName(),a.getAffiliation(),a.getEmail())),m_Qualification(q){}
-
-double StudentRegistration::calculateFee()
+StudentRegistration::StudentRegistration(QObject *parent):Registration(parent)
 {
-    return calculateFee()/2;
+
 }
 
-QString StudentRegistration::toString()
+StudentRegistration::StudentRegistration(Person a, QString q):Registration(a)
 {
-    return QString("The information of the person registered %1./n Booking Date: %2/n Fee: %3/Qualification %4").arg(getAttendee().toString()).arg(getBookingDate().toString("yyyy-MM-dd")).arg(calculateFee()).arg(m_Qualification);
+    q = m_Qualification;
 }
+
+double StudentRegistration::calculateFee() const
+{
+    return STANDARD_FEE/2;
+}
+
+QString StudentRegistration::toString() const
+{
+    return QString("Qualification: %1\nThe Standard Fee is %2").arg(m_Qualification).arg(calculateFee());
+}
+
+
+
